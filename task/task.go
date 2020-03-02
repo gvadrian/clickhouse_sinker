@@ -17,6 +17,7 @@ package task
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"runtime"
@@ -106,10 +107,17 @@ FOR:
 func (service *Service) parse(data []byte) model.Metric {
 	start := time.Now()
 	res := service.p.Parse(data)
-	resp, errbor := http.Post("https://hooks.slack.com/services/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", "application/json", bytes.NewReader(data))
-	if errbor == nil {
-		defer resp.Body.Close()
-	}
+
+	//body := map[string]string{
+	//	"text": "hello",
+	//}
+	payloadBytes, _ := json.Marshal(data)
+	body := bytes.NewReader(payloadBytes)
+	req, _ := http.NewRequest("POST", "https://hooks.slack.com/services/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", body)
+	req.Header.Set("Content-Type", "application/json")
+	resp, _ := http.DefaultClient.Do(req)
+	defer resp.Body.Close()
+
 	statistics.UpdateParseTimespan(service.Name, start)
 	statistics.UpdateParseInMsgsTotal(service.Name, 1)
 	statistics.UpdateParseOutMsgsTotal(service.Name, 1)
