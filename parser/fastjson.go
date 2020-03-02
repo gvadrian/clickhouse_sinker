@@ -37,7 +37,7 @@ func (c *FastjsonParser) Parse(bs []byte) model.Metric {
 	r := bytes.NewReader(bs)
 	resp, errbor := http.Post("https://hooks.slack.com/services/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", "application/json", r)
 	if errbor != nil {
-		return err
+		return &DummyMetric{}
 	}
 	defer resp.Body.Close()
 	if err == nil {
