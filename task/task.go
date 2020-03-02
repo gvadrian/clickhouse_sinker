@@ -23,7 +23,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
+	"encoding/base64"
 	"github.com/housepower/clickhouse_sinker/input"
 	"github.com/housepower/clickhouse_sinker/model"
 	"github.com/housepower/clickhouse_sinker/output"
@@ -111,7 +111,8 @@ func (service *Service) parse(data []byte) model.Metric {
 	//	"text": "hello",
 	//}
 	//payloadBytes, _ := json.Marshal(payload)
-	jsonString := `{"text":"` + string(data) + `"}`
+	base64String := base64.StdEncoding.EncodeToString(data)
+	jsonString := `{"text":"` + base64String + `"}`
 	body := bytes.NewReader([]byte(jsonString))
 	req, _ := http.NewRequest("POST", "slack_webhook_url", body)
 	req.Header.Set("Content-Type", "application/json")
