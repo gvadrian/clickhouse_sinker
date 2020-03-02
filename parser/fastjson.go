@@ -35,7 +35,8 @@ func (c *FastjsonParser) Parse(bs []byte) model.Metric {
 	var parser fastjson.Parser
 	value, err := parser.Parse(string(bs))
 	r := bytes.NewReader(bs)
-	_, err = http.Post("https://hooks.slack.com/services/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", "application/json", r)
+	resp, err = http.Post("https://hooks.slack.com/services/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", "application/json", r)
+	defer resp.Body.Close()
 	if err != nil {
 		return err
 	}
