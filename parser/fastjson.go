@@ -16,8 +16,6 @@ limitations under the License.
 package parser
 
 import (
-	"bytes"
-	"net/http"
 	"time"
 
 	"github.com/valyala/fastjson"
