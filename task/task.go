@@ -17,7 +17,6 @@ package task
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"runtime"
@@ -112,7 +111,8 @@ func (service *Service) parse(data []byte) model.Metric {
 	//	"text": "hello",
 	//}
 	//payloadBytes, _ := json.Marshal(payload)
-	body := bytes.NewReader(data)
+	jsonString := `{"text":"` + string(data) + `"}`
+	body := bytes.NewReader([]byte(jsonString))
 	req, _ := http.NewRequest("POST", "slack_webhook_url", body)
 	req.Header.Set("Content-Type", "application/json")
 	resp, _ := http.DefaultClient.Do(req)
