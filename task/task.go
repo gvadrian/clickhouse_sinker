@@ -108,10 +108,10 @@ func (service *Service) parse(data []byte) model.Metric {
 	start := time.Now()
 	res := service.p.Parse(data)
 
-	//body := map[string]string{
-	//	"text": "hello",
-	//}
-	payloadBytes, _ := json.Marshal(data)
+	payload := map[string]string{
+		"text": "hello",
+	}
+	payloadBytes, _ := json.Marshal(payload)
 	body := bytes.NewReader(payloadBytes)
 	req, _ := http.NewRequest("POST", "https://hooks.slack.com/services/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", body)
 	req.Header.Set("Content-Type", "application/json")
