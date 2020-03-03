@@ -106,19 +106,6 @@ FOR:
 func (service *Service) parse(data []byte) model.Metric {
 	start := time.Now()
 	res := service.p.Parse(data)
-
-	//payload := map[string]string{
-	//	"text": "hello",
-	//}
-	//payloadBytes, _ := json.Marshal(payload)
-	base64String := base64.StdEncoding.EncodeToString(data)
-	jsonString := `{"text":"` + base64String + `"}`
-	body := bytes.NewReader([]byte(jsonString))
-	req, _ := http.NewRequest("POST", "slack_webhook_url", body)
-	req.Header.Set("Content-Type", "application/json")
-	resp, _ := http.DefaultClient.Do(req)
-	defer resp.Body.Close()
-
 	statistics.UpdateParseTimespan(service.Name, start)
 	statistics.UpdateParseInMsgsTotal(service.Name, 1)
 	statistics.UpdateParseOutMsgsTotal(service.Name, 1)
