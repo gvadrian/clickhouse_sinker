@@ -16,19 +16,16 @@ limitations under the License.
 package task
 
 import (
-	"bytes"
 	"fmt"
-	"net/http"
-	"runtime"
-	"strconv"
-	"strings"
-	"time"
-	"encoding/base64"
 	"github.com/housepower/clickhouse_sinker/input"
 	"github.com/housepower/clickhouse_sinker/model"
 	"github.com/housepower/clickhouse_sinker/output"
 	"github.com/housepower/clickhouse_sinker/parser"
 	"github.com/housepower/clickhouse_sinker/statistics"
+	"runtime"
+	"strconv"
+	"strings"
+	"time"
 
 	"github.com/sundy-li/go_commons/log"
 )
